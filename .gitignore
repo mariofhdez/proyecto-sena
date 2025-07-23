@@ -143,8 +143,26 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/node
 
-# Prisma ORM
-generated/prisma/
+# Created by https://www.toptal.com/developers/gitignore/api/react
+# Edit at https://www.toptal.com/developers/gitignore?templates=react
+
+### react ###
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+
+node_modules
+bower_components
+
+*.sublime*
+
+psd
+thumb
+sketch
+
+# End of https://www.toptal.com/developers/gitignore/api/react
 
 requerimientos.md
 estructura-carpetas.txt
@@ -154,4 +172,5 @@ utilidades-comunes.md
 test-mock.js
 test-settlement.js
 README_TESTS_SIMPLE.md
-CHECKLIST_AVANCE_BACKEND.md
+DOCUMENTACION_SRC.md
+CHECKLIST_AVANCE_FRONTEND.md

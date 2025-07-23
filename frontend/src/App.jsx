@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom"
 import CompLayout from "./layout"
 import CompShowEmployees from "./components/employees/ShowEmployees"
 import CompCreateEmployee from "./components/employees/CreateEmployee"
@@ -10,6 +10,13 @@ import CompShowPeriods from "./components/settlements/ShowPeriods"
 import CompCreatePeriod from "./components/settlements/CreatePeriod"
 import CompDetailPeriod from "./components/settlements/DetailPeriod"
 import CompOpenPeriod from "./components/settlements/OpenPeriod"
+import Login from "./components/auth/Login"
+
+// Componente para proteger rutas privadas
+function PrivateRoute({ children }) {
+  const token = localStorage.getItem("token");
+  return token ? children : <Navigate to="/login" replace />;
+}
 
 function App() {
 
@@ -17,7 +24,12 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<CompLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={
+            <PrivateRoute>
+              <CompLayout />
+            </PrivateRoute>
+          }>
             <Route path="/employees" element={<CompShowEmployees />} />
             <Route path="/employees/create" element={<CompCreateEmployee />} />
             <Route path="/employees/edit/:id" element={<CompEditEmployee />} />
@@ -30,7 +42,6 @@ function App() {
             <Route path="/settlements/open/:id" element={<CompOpenPeriod />} />
           </Route>
         </Routes>
-        {/* <h1>Sistema de Gestión de Nómina</h1> */}
       </BrowserRouter>
     </>
   )

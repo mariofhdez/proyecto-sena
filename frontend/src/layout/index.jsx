@@ -1,6 +1,27 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 export default function CompLayout() {
+    const navigate = useNavigate();
+    let userName = "Usuario";
+    let userRole = null;
+    const token = localStorage.getItem("token");
+    if (token) {
+        try {
+            const decoded = jwtDecode(token);
+            userName = decoded.name || decoded.email || "Usuario";
+            userRole = decoded.role || null;
+        } catch {
+            userName = "Usuario";
+            userRole = null;
+        }
+    }
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    };
+
     return (
         <>
             <nav className="navbar text-bg-secondary styles-navbar">
@@ -19,15 +40,16 @@ export default function CompLayout() {
                             <li className="nav-item">
                                 <NavLink to="/settlements" className={({ isActive }) => isActive ? 'nav-link active fs-4' : 'nav-link fs-4'}>Liquidaciones</NavLink>
                             </li>
-                            <li className="nav-item">
-                                <NavLink to="/config" className={({ isActive }) => isActive ? 'nav-link active fs-4' : 'nav-link fs-4'}>Configuración</NavLink>
-                            </li>
+                            {userRole === "ADMIN" && (
+                                <li className="nav-item">
+                                    <NavLink to="/config" className={({ isActive }) => isActive ? 'nav-link active fs-4' : 'nav-link fs-4'}>Configuración</NavLink>
+                                </li>
+                            )}
                         </ul>
                     </div>
-                    <div className="navbar-nav d-flex flex-row gap-5">
-                        {/* Editar para que en vez de usuario salga el nombre e implementar lógica de cerrar sesión */}
-                        <span className="navbar-text fs-4">Usuario</span>
-                        <button className="btn btn-outline-dark fs-4">Cerrar sesión</button>
+                    <div className="navbar-nav d-flex flex-row gap-5 align-items-center">
+                        <span className="navbar-text fs-4 text-capitalize"><i className="fa fa-user me-2"></i>{userName}</span>
+                        <button className="btn btn-outline-dark fs-4" onClick={handleLogout}>Cerrar sesión</button>
                     </div>
                 </div>
             </nav>
