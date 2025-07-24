@@ -32,7 +32,8 @@ export default function CompCreateNovelty() {
     const getConcepts = async () => {
         const response = await axios.get(`${BASE_URL}${CONCEPTS_PATH}`);
         const data = await response.data;
-        setConcepts(data);
+        const availableConcepts = data.filter(c => c.isRegularConcept === false);
+        setConcepts(availableConcepts);
     }
 
     const handleChangeEmployee = (e) => {

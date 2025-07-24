@@ -64,7 +64,8 @@ export default function CompShowEmployees() {
                                     <td>{employee.isActive ? 'Activo' : 'Inactivo'}</td>
                                     <td>{employee.salary}</td>
                                     <td className="d-flex gap-2 justify-content-center">
-                                        <NavLink to={`${EMPLOYEES_PATH}/edit/${employee.id}`} className="btn btn-secondary"><i className="fa-solid fa-pen-to-square"></i></NavLink>
+                                        <NavLink to={`${EMPLOYEES_PATH}/${employee.id}`} className="btn btn-secondary"><i className="fa-solid fa-eye"></i></NavLink>
+                                        <NavLink to={`${EMPLOYEES_PATH}/edit/${employee.id}`} className="btn btn-primary"><i className="fa-solid fa-pen-to-square"></i></NavLink>
                                         <button className="btn btn-success" onClick={() => toggleEmployee(employee.id)}><i className="fa-solid fa-toggle-on"></i></button>
                                         <button className="btn btn-danger" onClick={() => deleteEmployee(employee.id)}><i className="fa-solid fa-trash-can"></i></button>
                                     </td>

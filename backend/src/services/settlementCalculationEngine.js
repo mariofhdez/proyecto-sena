@@ -132,6 +132,11 @@ async function getPeriodBase(employeeId, date, type, calculatedValues = new Map(
         const periodNovelties = await noveltyService.getAllNovelties(query);
 
         total = periodNovelties.reduce((sum, novelty) => sum + novelty.value, 0);
+
+        if (total === 0) {
+            const employee = await employeeService.getById(employeeId);
+            total = employee.salary / 30;
+        }
     }
 
     // Guardar en caché

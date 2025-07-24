@@ -116,7 +116,7 @@ async function validatePreloadBody(novelty) {
         validateRequiredNumber(novelty.quantity, 'quantity', errors);
         data.quantity = novelty.quantity;
 
-        data.value = await calculateConceptValue(novelty.conceptId, novelty.employeeId, novelty.quantity, novelty.date);
+        data.value = await calculateConceptValue(novelty.conceptId, novelty.employeeId, novelty.quantity, data.date);
     }
 
     if (errors.length > 0) return { errors: errors };
