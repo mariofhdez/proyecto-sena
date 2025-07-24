@@ -80,6 +80,50 @@ async function validateUniqueNovelty(employee, concept, date) {
     return true;
 }
 
+async function validatePreloadBody(novelty) {
+    let errors = [];
+    let data = {
+        date: null,
+        quantity: null,
+        value: null,
+        concept: { id: null } ,
+        employee: { id: null } 
+    }
+
+
+    data.date = '2025-01-01';
+
+    //validar empleado
+    validateRequiredNumber(novelty.employeeId, 'employeeId', errors);
+    const isValidEmployee = await verifyId(parseInt(novelty.employeeId, 10), 'employee');
+    if (!isValidEmployee) throw new NotFoundError('Employee with id \'' + novelty.employeeId + '\' was not found');
+    data.employee.id = novelty.employeeId;
+
+    //validar concepto
+    validateRequiredNumber(novelty.conceptId, 'conceptId', errors);
+    const isValidConcept = await verifyId(parseInt(novelty.conceptId, 10), 'concept');
+    if (!isValidConcept) throw new NotFoundError('Concept with id \'' + novelty.conceptId + '\' was not found');
+
+    const isRegularConcept = getRegularConcepts(novelty.conceptId);
+    if (isRegularConcept) errors.push('Concept with id \'' + novelty.conceptId + '\' is not available for novelties');
+    data.concept.id = novelty.conceptId;
+
+    if (getCalculationType(novelty.conceptId) === 'NOMINAL') {
+        validateRequiredNumber(novelty.value, 'value', errors);
+        data.value = novelty.value;
+    }
+    if (getCalculationType(novelty.conceptId) === 'LINEAL' || getCalculationType(novelty.conceptId) === 'FACTORIAL') {
+        validateRequiredNumber(novelty.quantity, 'quantity', errors);
+        data.quantity = novelty.quantity;
+
+        data.value = await calculateConceptValue(novelty.conceptId, novelty.employeeId, novelty.quantity, novelty.date);
+    }
+
+    if (errors.length > 0) return { errors: errors };
+    return data;
+}
+
 module.exports = {
-    validateNoveltyBody
+    validateNoveltyBody,
+    validatePreloadBody
 }

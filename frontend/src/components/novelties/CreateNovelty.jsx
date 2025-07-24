@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL, NOVELTIES_PATH, EMPLOYEES_PATH, CONCEPTS_PATH } from "../../utils/apiConfig";
 
-export default function CompCreateNew() {
+const URI = `${BASE_URL}${NOVELTIES_PATH}`;
+
+export default function CompCreateNovelty() {
     const [date, setDate] = useState('');
     const [quantity, setQuantity] = useState('');
     const [value, setValue] = useState('');
@@ -21,13 +24,13 @@ export default function CompCreateNew() {
     }, []);
 
     const getEmployees = async () => {
-        const response = await axios.get('http://localhost:3005/api/employee');
+        const response = await axios.get(`${BASE_URL}${EMPLOYEES_PATH}`);
         const data = await response.data;
         setEmployees(data);
     }
 
     const getConcepts = async () => {
-        const response = await axios.get('http://localhost:3005/api/concept');
+        const response = await axios.get(`${BASE_URL}${CONCEPTS_PATH}`);
         const data = await response.data;
         setConcepts(data);
     }
@@ -65,7 +68,7 @@ export default function CompCreateNew() {
         setQuantity(selectedQuantity);
 
         if (selectedQuantity !== '') {
-            await axios.post('http://localhost:3005/api/settlement-news/preload', {
+            await axios.post(`${URI}/preload`, {
                 employeeId: parseInt(employee),
                 conceptId: parseInt(concept),
                 quantity: parseFloat(selectedQuantity)
@@ -79,14 +82,14 @@ export default function CompCreateNew() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await axios.post('http://localhost:3005/api/settlement-news', {
+        await axios.post(URI, {
             date: date,
             employeeId: parseInt(employee),
             conceptId: parseInt(concept),
             quantity: parseFloat(quantity),
             value: parseFloat(value)
         });
-        navigate('/news');
+        navigate('/novelties');
     }
 
     return (

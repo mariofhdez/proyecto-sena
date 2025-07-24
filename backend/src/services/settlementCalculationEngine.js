@@ -129,12 +129,7 @@ async function getPeriodBase(employeeId, date, type, calculatedValues = new Map(
                 throw new Error(`Tipo de base no soportado: ${type}`);
         };
 
-        const periodNovelties = await noveltyService.getAllNovelties({
-            where: query,
-            include: {
-                concept: true
-            }
-        });
+        const periodNovelties = await noveltyService.getAllNovelties(query);
 
         total = periodNovelties.reduce((sum, novelty) => sum + novelty.value, 0);
     }
@@ -217,15 +212,12 @@ async function generateSettlement(employeeId, periodId, startDate, endDate) {
 
     // Obtener novedades del período
     const novelties = await noveltyService.getAllNovelties({
-        where: {
-            employeeId: employeeId,
-            status: 'PENDING',
-            date: {
-                gte: new Date(startDate),
-                lte: new Date(endDate)
-            }
-        },
-        include: { concept: true }
+        employeeId: employeeId,
+        status: 'PENDING',
+        date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate)
+        }
     });
 
     // Combinar conceptos regulares y novedades
@@ -273,10 +265,10 @@ async function generateSettlement(employeeId, periodId, startDate, endDate) {
                 calculatedValues // 🆕 Pasar el caché
             );
         } else {
-            console.log('else: ',concept);
+            console.log('else: ', concept);
             const novelty = novelties.find(n => n.conceptId === concept.id);
             if (novelty) {
-                console.log('novelty: ',novelty);
+                console.log('novelty: ', novelty);
                 value = novelty.value;
             }
         }

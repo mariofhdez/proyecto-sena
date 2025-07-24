@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { BASE_URL, NOVELTIES_PATH } from "../../utils/apiConfig";
 
-export default function CompShowNews() {
+const URI = `${BASE_URL}${NOVELTIES_PATH}`;
+
+export default function CompShowNovelties() {
     const [news, setNews] = useState([]);
 
     useEffect(() => {
@@ -10,13 +13,13 @@ export default function CompShowNews() {
     }, []);
 
     const getNews = async () => {
-        const response = await axios.get("http://localhost:3005/api/settlement-news");
+        const response = await axios.get(URI);
         const data = await response.data;
         setNews(data);
     }
 
     const deleteNew = async (id) => {
-        await axios.delete(`http://localhost:3005/api/settlement-news/${id}`);
+        await axios.delete(`${URI}/${id}`);
         getNews();
     }
     
@@ -25,7 +28,7 @@ export default function CompShowNews() {
             <div className="row">
                 <div className="col-12">
                     <h3 className="mt-3 p-4 mb-3 text-center">Listado de novedades</h3>
-                    <NavLink to="/news/create" className="btn btn-primary mb-3 float-end"><i className="fa-solid fa-plus"></i> Crear novedad</NavLink>
+                    <NavLink to="/novelties/create" className="btn btn-primary mb-3 float-end"><i className="fa-solid fa-plus"></i> Crear novedad</NavLink>
                     <table className="table table-striped table-hover">
                         <thead>
                             <tr>
@@ -49,7 +52,7 @@ export default function CompShowNews() {
                                     <td>{n.concept.name}</td>
                                     <td>{n.value}</td>
                                     <td className="d-flex gap-2 justify-content-center">
-                                        <NavLink to={`/news/edit/${n.id}`} className="btn btn-secondary"><i className="fa-solid fa-pen-to-square"></i></NavLink>
+                                        <NavLink to={`/novelties/edit/${n.id}`} className="btn btn-secondary"><i className="fa-solid fa-pen-to-square"></i></NavLink>
                                         <button className="btn btn-danger" onClick={() => deleteNew(n.id)}><i className="fa-solid fa-trash-can"></i></button>
                                     </td>
                                 </tr>

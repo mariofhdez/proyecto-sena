@@ -2,7 +2,15 @@ const prisma = require('../config/database');
 const { NotFoundError } = require("../utils/appError");
 
 exports.getAllNovelties = async (data) => {
-    const novelties = await prisma.novelty.findMany(data);
+    const novelties = await prisma.novelty.findMany(
+        {
+            where: data,
+            include: {
+                employee: true,
+                concept: true
+            }
+        }
+    );
     if (!novelties) throw new NotFoundError('Novelties were not found');
     return novelties;
 }
@@ -11,6 +19,10 @@ exports.getById = async (id) => {
     const novelty = await prisma.novelty.findUnique({
         where: {
             id: id
+        },
+        include: {
+            employee: true,
+            concept: true
         }
     });
     if (!novelty) throw new NotFoundError('Novelty with id \'' + id + '\' was not found');

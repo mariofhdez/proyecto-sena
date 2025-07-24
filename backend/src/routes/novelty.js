@@ -9,5 +9,6 @@ noveltyRouter.patch('/:id', noveltyController.updateNovelty);
 noveltyRouter.delete('/:id', noveltyController.deleteNovelty);
 noveltyRouter.get('/employee/:employeeId', noveltyController.getNoveltiesByEmployee);
 noveltyRouter.get('/period/:periodId', noveltyController.getNoveltiesByPeriod);
+noveltyRouter.post('/preload', noveltyController.preload);
 
 module.exports = noveltyRouter;
