@@ -127,7 +127,7 @@ exports.toggleUserStatus = async (req, res, next) => {
         
         const updatedUser = await toggleUserStatus(req.params.id);
         
-        return res.status(201).json({ message: `Usuario ${updatedUser.name} ${updatedUser.isActive ? 'activado' : 'desactivado'} correctamente.` });
+        return res.status(201).json(updatedUser);
     } catch (error) {
         next(error);
     }

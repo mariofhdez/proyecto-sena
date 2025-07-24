@@ -11,6 +11,11 @@ import CompCreatePeriod from "./components/settlements/CreatePeriod"
 import CompDetailPeriod from "./components/settlements/DetailPeriod"
 import CompOpenPeriod from "./components/settlements/OpenPeriod"
 import Login from "./components/auth/Login"
+import CompShowConcepts from "./components/concepts/ShowConcepts"
+import CompSettingsMenu from "./components/settings"
+import CompShowUsers from "./components/users/ShowUsers"
+import CompHomeMenu from "./components/home/index"
+import CompCreateUser from "./components/users/CreateUser"
 
 // Componente para proteger rutas privadas
 function PrivateRoute({ children }) {
@@ -30,6 +35,7 @@ function App() {
               <CompLayout />
             </PrivateRoute>
           }>
+            <Route path="/" element={<CompHomeMenu />} />
             <Route path="/employees" element={<CompShowEmployees />} />
             <Route path="/employees/create" element={<CompCreateEmployee />} />
             <Route path="/employees/edit/:id" element={<CompEditEmployee />} />
@@ -40,6 +46,11 @@ function App() {
             <Route path="/settlements/create" element={<CompCreatePeriod />} />
             <Route path="/settlements/:id" element={<CompDetailPeriod />} />
             <Route path="/settlements/open/:id" element={<CompOpenPeriod />} />
+            <Route path="/config" element={<CompSettingsMenu />} />
+            <Route path="/config/concepts" element={<CompShowConcepts />} />
+            <Route path="/config/users" element={<CompShowUsers />} />
+            <Route path="/config/users/create" element={<CompCreateUser />} />
+
           </Route>
         </Routes>
       </BrowserRouter>
