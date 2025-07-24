@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { EMPLOYEES_PATH, BASE_URL } from "../../utils/apiConfig";
 
 const URI = `${BASE_URL}${EMPLOYEES_PATH}`;
@@ -18,6 +18,9 @@ export default function CompEditEmployee() {
     const navigate = useNavigate();
 
     const { id } = useParams();
+    const location = useLocation();
+
+    const editMode = location.pathname.includes('/edit/');
 
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -79,6 +82,7 @@ export default function CompEditEmployee() {
                                     id="firstName"
                                     value={firstName}
                                     onChange={e => setFirstName(e.target.value)}
+                                    disabled={!editMode}
                                 />
                             </div>
 
@@ -90,6 +94,7 @@ export default function CompEditEmployee() {
                                     id="otherNames"
                                     value={otherNames}
                                     onChange={e => setOtherNames(e.target.value)}
+                                    disabled={!editMode}
                                 />
                             </div>
                         </div>
@@ -102,6 +107,7 @@ export default function CompEditEmployee() {
                                     id="firstSurname"
                                     value={firstSurname}
                                     onChange={e => setFirstSurname(e.target.value)}
+                                    disabled={!editMode}
                                 />
                             </div>
 
@@ -113,6 +119,7 @@ export default function CompEditEmployee() {
                                     id="otherSurnames"
                                     value={otherSurnames}
                                     onChange={e => setOtherSurnames(e.target.value)}
+                                    disabled={!editMode}
                                 />
                             </div>
                         </div>
@@ -127,6 +134,7 @@ export default function CompEditEmployee() {
                                     value={salary}
                                     onChange={e => setSalary(e.target.value)}
                                     step="0.01"
+                                    disabled={!editMode}
                                 />
                             </div>
                             <div className="mb-3 px-4 w-50">
@@ -137,6 +145,7 @@ export default function CompEditEmployee() {
                                     id="position"
                                     value={position}
                                     onChange={e => setPosition(e.target.value)}
+                                    disabled={!editMode}
                                 />
                             </div>
                         </div>
@@ -154,6 +163,7 @@ export default function CompEditEmployee() {
                                         setTransportAllowance(false);
                                     }
                                 }}
+                                disabled={!editMode}
                             />
                             <label htmlFor="transportAllowance" className="form-label fs-4">Auxilio de Transporte</label>
                         </div>

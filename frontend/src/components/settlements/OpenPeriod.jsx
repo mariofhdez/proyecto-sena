@@ -207,7 +207,7 @@ export default function CompOpenPeriod() {
             <div className="row">
                 <div className="col-12">
                     <h3 className="mt-3 p-4 mb-3 text-center">Listado de empleados</h3>
-                    <NavLink to={`/settlements/${id}`} onClick={handleCreatePayrolls} className="btn btn-primary mb-3 float-end"><i className="fa-solid fa-plus"></i> Crear nómina</NavLink>
+                    <NavLink to={`/settlements/${id}`} onClick={handleCreatePayrolls} className={ settlementStatus === 'DRAFT' ? "btn btn-primary mb-3 float-end" : "btn btn-primary mb-3 float-end disabled"}><i className="fa-solid fa-plus"></i> Crear nómina</NavLink>
                     <table className="table table-striped table-hover">
                         <thead>
                             <tr>

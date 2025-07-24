@@ -39,6 +39,7 @@ function App() {
             <Route path="/employees" element={<CompShowEmployees />} />
             <Route path="/employees/create" element={<CompCreateEmployee />} />
             <Route path="/employees/edit/:id" element={<CompEditEmployee />} />
+            <Route path="/employees/:id" element={<CompEditEmployee />} />
             <Route path="/novelties" element={<CompShowNovelties />} />
             <Route path="/novelties/create" element={<CompCreateNovelty />} />
             <Route path="/novelties/edit/:id" element={<CompEditNovelty />} />
