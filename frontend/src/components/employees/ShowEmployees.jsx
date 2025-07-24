@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { BASE_URL, EMPLOYEES_PATH } from "../../utils/apiConfig";
+
+const URI = `${BASE_URL}${EMPLOYEES_PATH}`;
 
 export default function CompShowEmployees() {
     const [employees, setEmployees] = useState([]);
@@ -10,13 +13,13 @@ export default function CompShowEmployees() {
     }, []);
 
     const getEmployees = async () => {
-        const response = await axios.get("http://localhost:3005/api/employee");
+        const response = await axios.get(URI);
         const data = await response.data;
         setEmployees(data);
     }
 
     const deleteEmployee = async (id) => {
-        await axios.delete(`http://localhost:3005/api/employee/${id}`);
+        await axios.delete(`${URI}/${id}`);
         getEmployees();
     }
 
@@ -49,7 +52,7 @@ export default function CompShowEmployees() {
                                     <td>{employee.isActive ? 'Activo' : 'Inactivo'}</td>
                                     <td>{employee.salary}</td>
                                     <td className="d-flex gap-2 justify-content-center">
-                                        <NavLink to={`/employees/edit/${employee.id}`} className="btn btn-secondary"><i className="fa-solid fa-pen-to-square"></i></NavLink>
+                                        <NavLink to={`${EMPLOYEES_PATH}/edit/${employee.id}`} className="btn btn-secondary"><i className="fa-solid fa-pen-to-square"></i></NavLink>
                                         <button className="btn btn-success"><i className="fa-solid fa-toggle-on"></i></button>
                                         <button className="btn btn-danger" onClick={() => deleteEmployee(employee.id)}><i className="fa-solid fa-trash-can"></i></button>
                                     </td>

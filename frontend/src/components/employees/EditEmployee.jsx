@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { EMPLOYEES_PATH, BASE_URL } from "../../utils/apiConfig";
+
+const URI = `${BASE_URL}${EMPLOYEES_PATH}`;
 
 export default function CompEditEmployee() {
     const [identification, setIdentification] = useState('');
@@ -18,7 +21,7 @@ export default function CompEditEmployee() {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        await axios.patch(`http://localhost:3005/api/employee/${id}`, 
+        await axios.patch(`${URI}/${id}`, 
             {
                 // identification: identification,
                 firstSurname: firstSurname,
@@ -30,7 +33,7 @@ export default function CompEditEmployee() {
                 position: position,
             }
         );
-        navigate('/employees');
+        navigate(`${EMPLOYEES_PATH}`);
     }
 
     useEffect(() => {
@@ -38,7 +41,7 @@ export default function CompEditEmployee() {
     },[]);
 
     const getEmployeeById = async () => {
-        const response = await axios.get(`http://localhost:3005/api/employee/${id}`);
+        const response = await axios.get(`${URI}/${id}`);
         const data = await response.data;
         setIdentification(data.identification);
         setFirstName(data.firstName);

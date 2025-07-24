@@ -35,7 +35,7 @@ export default function CompLayout() {
                                 <NavLink to="/employees" className={({ isActive }) => isActive ? 'nav-link active fs-4' : 'nav-link fs-4'}>Empleados</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink to="/news" className={({ isActive }) => isActive ? 'nav-link active fs-4' : 'nav-link fs-4'}>Novedades</NavLink>
+                                <NavLink to="/novelties" className={({ isActive }) => isActive ? 'nav-link active fs-4' : 'nav-link fs-4'}>Novedades</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink to="/settlements" className={({ isActive }) => isActive ? 'nav-link active fs-4' : 'nav-link fs-4'}>Liquidaciones</NavLink>

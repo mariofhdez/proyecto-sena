@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { EMPLOYEES_PATH, BASE_URL } from "../../utils/apiConfig";
 
-const URI = 'http://localhost:3005/api/employee';
+const URI = `${BASE_URL}${EMPLOYEES_PATH}`;
 
 export default function CompCreateEmployee() {
     const [identification, setIdentification] = useState('');
@@ -31,7 +32,7 @@ export default function CompCreateEmployee() {
                 position: position,
             }
         );
-        navigate('/employees');
+        navigate(`${EMPLOYEES_PATH}`);
     }
 
     return (

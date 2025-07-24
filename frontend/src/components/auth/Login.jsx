@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AUTH_PATH, BASE_URL } from "../../utils/apiConfig";
+
+const URI = `${BASE_URL}${AUTH_PATH}`;
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -16,7 +19,7 @@ export default function Login() {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:3005/api/auth/login", {
+      const response = await axios.post(`${URI}/login`, {
         email,
         password,
       });
