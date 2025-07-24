@@ -1,5 +1,5 @@
 {
-  "PayrollConcept": [
+ "PayrollConcept": [
     {"code":"101","name":"Salario Básico","type":"DEVENGADO","base":"SALARY", "divisor": 30,"factor":null,"isIncome":true,"isVacation":true,"isIBC":true,"calculationType":"LINEAL", "isRegularConcept": true},
 {"code":"102","name":"Apoyo de sostenimiento","type":"DEVENGADO","base":null,"factor":null,"isIncome":false,"isVacation":false,"isIBC":false,"calculationType":"NOMINAL", "isRegularConcept": false},
 {"code":"103","name":"Teletrabajo","type":"DEVENGADO","base":null,"factor":null,"isIncome":false,"isVacation":false,"isIBC":false,"calculationType":"NOMINAL", "isRegularConcept": false},

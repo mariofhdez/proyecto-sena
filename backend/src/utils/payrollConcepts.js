@@ -29,7 +29,7 @@ async function loadPayrollConcepts() {
             // Cargar desde staticData.json
             const staticPath = path.join(__dirname, '../../prisma/staticData.json');
             const staticData = JSON.parse(fs.readFileSync(staticPath, 'utf8'));
-            if (!staticData.concept || staticData.concept.length === 0) {
+            if (!staticData.payrollConcept || staticData.payrollConcept.length === 0) {
                 throw new Error('No se encontraron conceptos en staticData.json');
             }
             // Insertar en la base de datos
