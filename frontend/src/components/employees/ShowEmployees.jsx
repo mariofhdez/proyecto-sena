@@ -18,6 +18,18 @@ export default function CompShowEmployees() {
         setEmployees(data);
     }
 
+    const toggleEmployee = async (id) => {
+        try {
+            const response = await axios.post(`${URI}/status/${id}`);
+
+            setEmployees((prevEmployees) => 
+                prevEmployees.map((e) => e.id === id ? {...response.data }: e)
+            )
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     const deleteEmployee = async (id) => {
         await axios.delete(`${URI}/${id}`);
         getEmployees();
@@ -53,7 +65,7 @@ export default function CompShowEmployees() {
                                     <td>{employee.salary}</td>
                                     <td className="d-flex gap-2 justify-content-center">
                                         <NavLink to={`${EMPLOYEES_PATH}/edit/${employee.id}`} className="btn btn-secondary"><i className="fa-solid fa-pen-to-square"></i></NavLink>
-                                        <button className="btn btn-success"><i className="fa-solid fa-toggle-on"></i></button>
+                                        <button className="btn btn-success" onClick={() => toggleEmployee(employee.id)}><i className="fa-solid fa-toggle-on"></i></button>
                                         <button className="btn btn-danger" onClick={() => deleteEmployee(employee.id)}><i className="fa-solid fa-trash-can"></i></button>
                                     </td>
                                 </tr>

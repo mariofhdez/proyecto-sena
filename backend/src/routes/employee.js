@@ -250,5 +250,7 @@ employeeRouter.patch('/:id', employeeController.updateEmployee);
  */
 employeeRouter.delete('/:id', employeeController.deleteEmployee);
 
+employeeRouter.post('/status/:id', employeeController.toggleEmployee);
+
 
 module.exports = employeeRouter;
