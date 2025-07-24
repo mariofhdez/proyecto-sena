@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development node --watch ./src/server.js",
     "start": "cross-env NODE_ENV=production node ./src/server.js",
+    "db:setup": "npx prisma migrate dev --name init && npx prisma db seed",
+    "db:reset": "npx prisma migrate reset --force && npx prisma db seed",
     "test": "cross-env NODE_ENV=test jest --runInBand --verbose ",
     "test:watch": "cls && npm run test -- --watch --silent",
     "test:coverage": "cls && npm run test -- --coverage --silent && start coverage/lcov-report/index.html",

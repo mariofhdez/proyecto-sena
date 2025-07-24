@@ -145,6 +145,7 @@ dist
 
 # Prisma ORM
 generated/prisma/
+prisma/migrations/
 
 requerimientos.md
 estructura-carpetas.txt
