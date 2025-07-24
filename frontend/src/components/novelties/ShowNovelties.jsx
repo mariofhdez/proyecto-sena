@@ -54,7 +54,7 @@ export default function CompShowNovelties() {
                                     <td>{n.employee.firstName} {n.employee.firstSurname}</td>
                                     <td>{n.employee.identification}</td>
                                     <td>{n.concept.name}</td>
-                                    <td>{n.status}</td>
+                                    <td>{n.status === 'APPLIED' ? 'APLICADA': 'PENDIENTE'}</td>
                                     <td>{n.value}</td>
                                     <td className="d-flex gap-2 justify-content-center">
                                         <NavLink to={`/novelties/edit/${n.id}`} className="btn btn-secondary"><i className="fa-solid fa-pen-to-square"></i></NavLink>

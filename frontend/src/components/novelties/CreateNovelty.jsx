@@ -24,7 +24,7 @@ export default function CompCreateNovelty() {
     }, []);
 
     const getEmployees = async () => {
-        const response = await axios.get(`${BASE_URL}${EMPLOYEES_PATH}`);
+        const response = await axios.get(`${BASE_URL}${EMPLOYEES_PATH}/active`);
         const data = await response.data;
         setEmployees(data);
     }
