@@ -2,6 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { fromTimestampToDate } from "../../utils/formatDate";
+import { BASE_URL, PERIODS_PATH } from "../../utils/apiConfig";
+
+const URI = `${BASE_URL}${PERIODS_PATH}`
 
 export default function CompShowPeriods() {
     const [periods, setPeriods] = useState([]);
@@ -11,13 +14,13 @@ export default function CompShowPeriods() {
     }, []);
 
     const getPeriods = async () => {
-        const response = await axios.get("http://localhost:3005/api/period");
+        const response = await axios.get(URI);
         const data = await response.data;
         setPeriods(data);
     }
 
     const deletePeriod = async (id) => {
-        await axios.delete(`http://localhost:3005/api/period/${id}`);
+        await axios.delete(`${URI}/${id}`);
         getPeriods();
     }
 

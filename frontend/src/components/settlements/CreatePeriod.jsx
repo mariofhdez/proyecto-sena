@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BASE_URL, PERIODS_PATH } from "../../utils/apiConfig";
+
+const URI = `${BASE_URL}${PERIODS_PATH}`
 
 export default function CompCreatePeriod() {
 
@@ -31,7 +34,8 @@ export default function CompCreatePeriod() {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await axios.post("http://localhost:3005/api/period/",{
+        const response = await axios.post(URI,{
+            period: `${year} - ${month.label}`,
             startDate: startDate,
             endDate: endDate,
         });

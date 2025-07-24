@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { fromTimestampToDate } from "../../utils/formatDate";
 import axios from "axios";
+import { BASE_URL, PERIODS_PATH, SETTLEMENTS_PATH } from "../../utils/apiConfig";
+
+const URI = `${BASE_URL}${PERIODS_PATH}`
 
 export default function CompDetailPeriod() {
 
@@ -25,12 +28,12 @@ export default function CompDetailPeriod() {
     }, []);
 
     const getPeriodById = async () => {
-        const response = await axios.get(`http://localhost:3005/api/period/${id}`);
+        const response = await axios.get(`${URI}/${id}`);
         const data = await response.data;
         setStartDate(fromTimestampToDate(data.startDate));
         setEndDate(fromTimestampToDate(data.endDate));
         setPaymentDate('');
-        // setPeriod(data.period);
+        setPeriod(data.period);
         setSettlementStatus(data.status);
         setQuantity(setValue(data.employeesQuantity));
         setEarnings(setValue(data.earningsTotal));
@@ -39,7 +42,7 @@ export default function CompDetailPeriod() {
     }
 
     const getPayrolls = async () => {
-        const response = await axios.get(`http://localhost:3005/api/settlement?periodId=${id}`);
+        const response = await axios.get(`${BASE_URL}${SETTLEMENTS_PATH}?periodId=${id}`);
         const data = await response.data;
         setPayrolls(data);
     }
@@ -52,9 +55,18 @@ export default function CompDetailPeriod() {
         }
     }
 
+
     const handleSettlePayrolls = async () => {
-        const response = await axios.post(`http://localhost:3005/api/period/${id}/settle`, {
-            employees: payrolls.map(payroll => payroll.employee.id)
+        const response = await axios.post(`${URI}/${id}/settle`, {
+            // employees: payrolls.map(payroll => payroll.employee.id)
+        });
+        navigate(`/settlements/${response.data.id}`);
+        window.location.reload();
+    }
+
+    const handleClosePayrolls = async () => {
+        const response = await axios.post(`${URI}/${id}/close`, {
+            // employees: payrolls.map(payroll => payroll.employee.id)
         });
         navigate(`/settlements/${response.data.id}`);
     }
@@ -185,7 +197,10 @@ export default function CompDetailPeriod() {
             <div className="row">
                 <div className="col-12">
                     <h3 className="mt-3 p-4 mb-3 text-center">Listado de nóminas</h3>
-                    <NavLink to="/settlements/create" className="btn btn-primary mb-3 float-end" onClick={handleSettlePayrolls}><i className="fa-solid fa-plus"></i> Liquidar nóminas</NavLink>
+                    <div className="d-flex justify-content-end gap-3">
+                    <NavLink to={`/settlements/${id}`} className="btn btn-primary mb-3 float-end" onClick={handleSettlePayrolls}><i className="fa-solid fa-plus"></i> Liquidar nóminas</NavLink>
+                    <NavLink to={`/settlements/${id}`} className="btn btn-primary mb-3 float-end" onClick={handleClosePayrolls}><i className="fa-solid fa-plus"></i> Cerrar nóminas</NavLink>
+                    </div>
                     <table className="table table-striped table-hover">
                         <thead>
                             <tr>

@@ -87,6 +87,42 @@ exports.createPeriod = async (req, res, next) => {
     }
 }
 
+// exports.loadEmployees = async (req, res, next) => {
+//     try {
+//         if(req.body.length === 0) throw new ValidationError('Period was not updated', ['The employees array must be greater than 0']);
+        
+//         const id = parseInt(req.params.id);
+//         if(!isValidNumericType(id)) throw new ValidationError('Period was not updated', ['The field id must be a numeric value.']);
+
+//         const isValidPeriod = await verifyId(id, "period");
+//         if(!isValidPeriod) throw new NotFoundError('Period with id \'' + id + '\' was not found')
+
+//         const periodLoaded = await loadEmployees(req.body);
+//         if(!settledPeriod) throw new Error('Period was not updated');
+//         res.json(periodLoaded);
+//     } catch (error) {
+//         next(error)
+//     }
+// }
+
+exports.openPeriod = async (req, res, next) => {
+    try {
+        const id = parseInt(req.params.id);
+        if(!isValidNumericType(id)) throw new ValidationError('The field id must be a numeric value.');
+
+        const isValidPeriod = await verifyId(id, "period");
+        if (!isValidPeriod) {
+            return next(new NotFoundError('Period with id \'' + id + '\' was not found'));
+        }
+
+        const employees = req.body.employees;
+        const period = await loadEmployees(id, employees, next);
+        res.json(period);
+    } catch (error) {
+        next(error);
+    }
+}
+
 /**
  * Liquida un período de nómina
  * 
@@ -105,7 +141,7 @@ exports.createPeriod = async (req, res, next) => {
 exports.settlePeriod = async (req, res, next) => {
     try {
         const id = parseInt(req.params.id);
-        if(!isValidNumericType(id)) throw new ValidationError('The field id must be a numeric value.');
+        if(!isValidNumericType(id)) throw new ValidationError('Period was not updated', ['The field id must be a numeric value.']);
         
         const isValidPeriod = await verifyId(id, "period");
         if (!isValidPeriod) {
@@ -152,40 +188,6 @@ exports.closePeriod = async (req, res, next) => {
     }
 }
 
-/**
- * Carga empleados a un período específico
- * 
- * @async
- * @function loadEmployees
- * @param {Object} req - Objeto de solicitud de Express
- * @param {Object} req.params - Parámetros de la ruta
- * @param {string} req.params.id - ID del período
- * @param {Object} req.body - Datos de la solicitud
- * @param {Array} req.body.employees - Lista de empleados a cargar
- * @param {Object} res - Objeto de respuesta de Express
- * @param {Function} next - Función para pasar al siguiente middleware
- * @returns {Object} Respuesta JSON con los datos del período actualizado
- * @throws {ValidationError} Si el ID no es válido
- * @throws {NotFoundError} Si el período no existe
- */
-exports.openPeriod = async (req, res, next) => {
-    try {
-        const id = parseInt(req.params.id);
-        if(!isValidNumericType(id)) throw new ValidationError('The field id must be a numeric value.');
-
-        const isValidPeriod = await verifyId(id, "period");
-        if (!isValidPeriod) {
-            return next(new NotFoundError('Period with id \'' + id + '\' was not found'));
-        }
-
-        const employees = req.body.employees;
-        const period = await loadEmployees(id, employees, next);
-        res.json(period);
-    } catch (error) {
-        next(error);
-    }
-}
-
 
 exports.deletePeriod = async (req, res, next) => {
     try {
@@ -196,23 +198,4 @@ exports.deletePeriod = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
-
-async function removePeriod(id) {
-    if (!isValidNumericType(id)) throw new ValidationError('The field id must be a numeric value.');
-
-    const period = await periodService.getById(id);
-    if (!period) throw new NotFoundError('Period with id \'' + id + '\' was not found');
-
-    if (period.settlements.length > 0) {
-        for (const settlement of period.settlements) {
-            const deletedSettlement = await settlementValidation.removeSettlement(settlement.id);
-            if(!deletedSettlement) throw new Error('Error al eliminar nómina');
-            console.log({message: 'Period controller: remove settlement'});
-        }
-    }
-
-    const deletedPeriod = await periodService.delete(id);
-    if (!deletedPeriod) throw new Error('Error al eliminar período');
-    return deletedPeriod;
 }

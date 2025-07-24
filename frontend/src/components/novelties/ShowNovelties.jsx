@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { BASE_URL, NOVELTIES_PATH } from "../../utils/apiConfig";
+import { fromTimestampToDate } from "../../utils/formatDate";
 
 const URI = `${BASE_URL}${NOVELTIES_PATH}`;
 
@@ -33,9 +34,11 @@ export default function CompShowNovelties() {
                         <thead>
                             <tr>
                                 <th className="text-center">Id</th>
+                                <th className="text-center">Fecha</th>
                                 <th className="text-center">Empleado</th>
                                 <th className="text-center">Identificación</th>
                                 <th className="text-center">Concepto</th>
+                                <th className="text-center">Valor</th>
                                 <th className="text-center">Valor</th>
                                 <th className="text-center">Acciones</th>
                             </tr>
@@ -47,9 +50,11 @@ export default function CompShowNovelties() {
                                     className="text-center"
                                 >
                                     <td>{n.id}</td>
+                                    <td>{fromTimestampToDate(n.date)}</td>
                                     <td>{n.employee.firstName} {n.employee.firstSurname}</td>
                                     <td>{n.employee.identification}</td>
                                     <td>{n.concept.name}</td>
+                                    <td>{n.status}</td>
                                     <td>{n.value}</td>
                                     <td className="d-flex gap-2 justify-content-center">
                                         <NavLink to={`/novelties/edit/${n.id}`} className="btn btn-secondary"><i className="fa-solid fa-pen-to-square"></i></NavLink>

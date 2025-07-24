@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { fromTimestampToDate } from "../../utils/formatDate";
 import axios from "axios";
+import { BASE_URL, EMPLOYEES_PATH, PERIODS_PATH } from "../../utils/apiConfig";
+
+const URI = `${BASE_URL}${PERIODS_PATH}`
 
 export default function CompOpenPeriod() {
 
@@ -27,12 +30,12 @@ export default function CompOpenPeriod() {
     }, []);
 
     const getPeriodById = async () => {
-        const response = await axios.get(`http://localhost:3005/api/period/${id}`);
+        const response = await axios.get(`${URI}/${id}`);
         const data = await response.data;
         setStartDate(fromTimestampToDate(data.startDate));
         setEndDate(fromTimestampToDate(data.endDate));
         setPaymentDate('');
-        // setPeriod(data.period);
+        setPeriod(data.period);
         setSettlementStatus(data.status);
         setQuantity(setValue(data.employeesQuantity));
         setEarnings(setValue(data.earningsTotal));
@@ -48,7 +51,7 @@ export default function CompOpenPeriod() {
     }
 
     const getEmployees = async () => {
-        const response = await axios.get(`http://localhost:3005/api/employee`);
+        const response = await axios.get(`${BASE_URL}${EMPLOYEES_PATH}`);
         const data = await response.data;
         setEmployees(data);
     }
@@ -56,7 +59,7 @@ export default function CompOpenPeriod() {
     const handleCreatePayrolls = async (e) => {
         e.preventDefault();
         console.log(selectedEmployees);
-        const response = await axios.post(`http://localhost:3005/api/period/${id}/loadEmployees`, {
+        const response = await axios.post(`${URI}/${id}/open`, {
             employees: selectedEmployees
         });
         navigate(`/settlements/${response.data.id}`);
@@ -204,7 +207,7 @@ export default function CompOpenPeriod() {
             <div className="row">
                 <div className="col-12">
                     <h3 className="mt-3 p-4 mb-3 text-center">Listado de empleados</h3>
-                    <NavLink to="/settlements/create" onClick={handleCreatePayrolls} className="btn btn-primary mb-3 float-end"><i className="fa-solid fa-plus"></i> Crear nómina</NavLink>
+                    <NavLink to={`/settlements/${id}`} onClick={handleCreatePayrolls} className="btn btn-primary mb-3 float-end"><i className="fa-solid fa-plus"></i> Crear nómina</NavLink>
                     <table className="table table-striped table-hover">
                         <thead>
                             <tr>
