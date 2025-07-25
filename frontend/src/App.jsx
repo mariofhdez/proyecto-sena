@@ -16,6 +16,9 @@ import CompSettingsMenu from "./components/settings"
 import CompShowUsers from "./components/users/ShowUsers"
 import CompHomeMenu from "./components/home/index"
 import CompCreateUser from "./components/users/CreateUser"
+import CompPayrollDetail from "./components/payrolls/PayrollDetail"
+import ProtectedRoute from "./routes/ProtectedRoute"
+import CompEditUser from "./components/users/EditUser"
 
 // Componente para proteger rutas privadas
 function PrivateRoute({ children }) {
@@ -30,27 +33,39 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={
-            <PrivateRoute>
-              <CompLayout />
-            </PrivateRoute>
-          }>
-            <Route path="/" element={<CompHomeMenu />} />
-            <Route path="/employees" element={<CompShowEmployees />} />
-            <Route path="/employees/create" element={<CompCreateEmployee />} />
-            <Route path="/employees/edit/:id" element={<CompEditEmployee />} />
-            <Route path="/employees/:id" element={<CompEditEmployee />} />
-            <Route path="/novelties" element={<CompShowNovelties />} />
-            <Route path="/novelties/create" element={<CompCreateNovelty />} />
-            <Route path="/novelties/edit/:id" element={<CompEditNovelty />} />
-            <Route path="/settlements" element={<CompShowPeriods />} />
-            <Route path="/settlements/create" element={<CompCreatePeriod />} />
-            <Route path="/settlements/:id" element={<CompDetailPeriod />} />
-            <Route path="/settlements/open/:id" element={<CompOpenPeriod />} />
-            <Route path="/config" element={<CompSettingsMenu />} />
-            <Route path="/config/concepts" element={<CompShowConcepts />} />
-            <Route path="/config/users" element={<CompShowUsers />} />
-            <Route path="/config/users/create" element={<CompCreateUser />} />
+
+          <Route 
+            path="/"
+            element={
+              <ProtectedRoute>
+                <CompLayout />
+              </ProtectedRoute>
+            }
+          >  
+
+            <Route path="" element={<CompHomeMenu />} />
+            
+            <Route path="employees" element={<CompShowEmployees />} />
+            <Route path="employees/create" element={<CompCreateEmployee />} />
+            <Route path="employees/edit/:id" element={<CompEditEmployee />} />
+            <Route path="employees/:id" element={<CompEditEmployee />} />
+            
+            <Route path="novelties" element={<CompShowNovelties />} />
+            <Route path="novelties/create" element={<CompCreateNovelty />} />
+            <Route path="novelties/edit/:id" element={<CompEditNovelty />} />
+            
+            <Route path="settlements" element={<CompShowPeriods />} />
+            <Route path="settlements/create" element={<CompCreatePeriod />} />
+            <Route path="settlements/:id" element={<CompDetailPeriod />} />
+            <Route path="settlements/open/:id" element={<CompOpenPeriod />} />
+            <Route path="payrolls/:id" element={<CompPayrollDetail />} />
+            
+            <Route path="config" element={<CompSettingsMenu />} />
+            <Route path="config/concepts" element={<CompShowConcepts />} />
+            <Route path="config/users" element={<CompShowUsers />} />
+            <Route path="config/users/create" element={<CompCreateUser />} />
+            <Route path="config/users/:id" element={<CompEditUser />} />
+            <Route path="config/users/edit/:id" element={<CompEditUser />} />
 
           </Route>
         </Routes>

@@ -57,8 +57,8 @@ export default function CompShowNovelties() {
                                     <td>{n.status === 'APPLIED' ? 'APLICADA': 'PENDIENTE'}</td>
                                     <td>{n.value}</td>
                                     <td className="d-flex gap-2 justify-content-center">
-                                        <NavLink to={`/novelties/edit/${n.id}`} className="btn btn-secondary"><i className="fa-solid fa-pen-to-square"></i></NavLink>
-                                        <button className="btn btn-danger" onClick={() => deleteNew(n.id)}><i className="fa-solid fa-trash-can"></i></button>
+                                        <NavLink to={`/novelties/edit/${n.id}`} className={n.status === 'APPLIED' ? "btn btn-secondary disabled":"btn btn-secondary"}><i className="fa-solid fa-pen-to-square"></i></NavLink>
+                                        <button className={n.status === 'APPLIED' ? "btn btn-danger disabled":"btn btn-danger"} onClick={() => deleteNew(n.id)}><i className="fa-solid fa-trash-can"></i></button>
                                     </td>
                                 </tr>
                             ))}

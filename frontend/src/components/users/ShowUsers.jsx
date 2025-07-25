@@ -4,12 +4,6 @@ import { NavLink } from "react-router-dom";
 import { BASE_URL, USERS_PATH } from "../../utils/apiConfig";
 
 const URI = `${BASE_URL}${USERS_PATH}`;
-const config = {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json"
-    }
-};
 
 
 export default function CompShowUsers() {
@@ -20,17 +14,27 @@ export default function CompShowUsers() {
     }, []);
 
     const getUsers = async () => {
-        const response = await axios.get(URI, config);
+        const response = await axios.get(URI, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json"
+            }
+        });
         const data = await response.data;
         setUsers(data);
     }
 
     const toggleUser = async (id, status) => {
         try {
-            const body = { isActive: !status}
-            const response = await axios.patch(`${URI}/status/${id}`, body, config);
+            const body = { isActive: !status }
+            const response = await axios.patch(`${URI}/status/${id}`, body, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json"
+            }
+        });
             const data = await response.data;
-    
+
             setUsers((prevUsers) =>
                 prevUsers.map((u) =>
                     u.id === id ? { ...data } : u
@@ -42,7 +46,12 @@ export default function CompShowUsers() {
     }
 
     const deleteUser = async (id) => {
-        await axios.delete(`${URI}/${id}`, config);
+        await axios.delete(`${URI}/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json"
+            }
+        });
         getUsers();
     }
 
@@ -75,7 +84,7 @@ export default function CompShowUsers() {
                                     <td>{u.role}</td>
                                     <td>{u.isActive ? 'Activo' : 'Inactivo'}</td>
                                     <td className="d-flex gap-2 justify-content-center">
-                                        <NavLink to={`${USERS_PATH}/edit/${u.id}`} className="btn btn-secondary"><i className="fa-solid fa-pen-to-square"></i></NavLink>
+                                        <NavLink to={`${u.id}`} className="btn btn-secondary"><i className="fa-solid fa-pen-to-square"></i></NavLink>
                                         <button className="btn btn-success" onClick={() => toggleUser(u.id, u.isActive)}><i className="fa-solid fa-toggle-off"></i></button>
                                         <button className="btn btn-danger" onClick={() => deleteUser(u.id)}><i className="fa-solid fa-trash-can"></i></button>
                                     </td>

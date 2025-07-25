@@ -34,7 +34,7 @@ exports.registerService = async (email, name, password, role) => {
             name,
             password: hashedPassword,
             role,
-            isActive: false,
+            isActive: true,
             createdAt: new Date(),
             updatedAt: new Date(),
         },

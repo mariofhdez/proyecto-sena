@@ -45,8 +45,9 @@ exports.getById = async (id) => {
     const settlement = await prisma.settlement.findUnique({
         where: { id: id },
         include: {
-            details: true,
-            employee: true
+            employee: true,
+            period: true,
+            details: {include: {concept: true}}
         }
     });
     if (!settlement) throw new NotFoundError('Settlement with id \'' + id + '\' was not found');

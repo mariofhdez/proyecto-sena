@@ -164,6 +164,8 @@ sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/react
 
+/backend/prisma/migrations/
+
 requerimientos.md
 estructura-carpetas.txt
 esquema-endpoints.md

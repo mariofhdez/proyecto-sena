@@ -26,6 +26,7 @@ async function authenticateToken(req, res, next) {
         const token = req.header('Authorization').split(' ')[1];
 
         jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
+            console.log('Token:', token);
             if (err) {
                 return next(new ForbiddenError(err.message));
             }

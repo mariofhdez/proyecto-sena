@@ -224,6 +224,7 @@ export default function CompDetailPeriod() {
                                     <td>{payroll.deductionsValue}</td>
                                     <td>{payroll.totalValue}</td>
                                     <td className="d-flex justify-content-center gap-2">
+                                        <NavLink to={`/payrolls/${payroll.id}`} className="btn btn-secondary"><i className="fa-solid fa-eye"></i></NavLink>
                                         <NavLink to={`/settlements/edit/${payroll.id}`} className="btn btn-primary"><i className="fa-solid fa-pencil"></i></NavLink>
                                         <button className="btn btn-danger"><i className="fa-solid fa-trash"></i></button>
                                     </td>
