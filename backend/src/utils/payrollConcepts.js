@@ -27,7 +27,9 @@ async function loadPayrollConcepts() {
         let conceptsFromDB = await prisma.concept.findMany({ orderBy: { code: 'asc' } });
         if (!conceptsFromDB || conceptsFromDB.length === 0) {
             // Cargar desde staticData.json
-            const staticPath = path.join(__dirname, '../../prisma/staticData.json');
+            console.log('dirname:',__dirname)
+            const staticPath = path.join(__dirname, '/prisma/staticData.json');
+            console.log('staticPath:', staticPath);
             const staticData = JSON.parse(fs.readFileSync(staticPath, 'utf8'));
             if (!staticData.payrollConcept || staticData.payrollConcept.length === 0) {
                 throw new Error('No se encontraron conceptos en staticData.json');
