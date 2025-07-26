@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql
+    environment:
+    - MYSQL_ROOT_PASSWORD=admin
+    - MYSQL_DATABASE=payma
+    ports:
+    - 3307:3306
+  app:
+    build: .
+    depends_on:
+    - mysqldb
+    ports:
+    - 3005:3005
+    - 5173:5173
+    

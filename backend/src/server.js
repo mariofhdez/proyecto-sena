@@ -23,7 +23,7 @@ async function main() {
         if (!areConceptsLoaded()) {
             await loadPayrollConcepts();
         }
-        app.listen(PORT, () => {
+        app.listen(PORT, '0.0.0.0', () => {
             console.log(`Servidor: http://localhost:${PORT}`);
         });
     } catch (error) {

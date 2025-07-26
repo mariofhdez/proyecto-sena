@@ -1,0 +1,48 @@
+
+# Dependencias instaladas
+node_modules
+**/node_modules
+
+# Archivos de log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Entornos y secretos
+.env
+.env.*
+
+# Archivos de Prisma generados
+/prisma/migrations/
+/prisma/dev.db
+/prisma/dev.sqlite
+/generated
+/dist
+/build
+
+# Configuraciones del sistema operativo o editor
+.DS_Store
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Git y CI/CD
+.git
+.gitignore
+.gitattributes
+.github/
+
+# Docker files (opcional si no quieres copiarlos dentro del contenedor)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Otros
+coverage/
+*.tsbuildinfo
+*.log
+*.bak
+*.tmp
+*.cache
