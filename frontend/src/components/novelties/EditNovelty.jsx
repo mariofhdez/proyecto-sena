@@ -1,9 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { BASE_URL, NOVELTIES_PATH, EMPLOYEES_PATH, CONCEPTS_PATH } from "../../utils/apiConfig";
-
-const URI = `${BASE_URL}${NOVELTIES_PATH}`;
+import api, { NOVELTIES_PATH, EMPLOYEES_PATH, CONCEPTS_PATH } from "../../utils/apiConfig";
 
 export default function CompEditNovelty() {
     const [date, setDate] = useState('');
@@ -21,7 +18,7 @@ export default function CompEditNovelty() {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        await axios.patch(`${URI}/${id}`, 
+        await api.patch(`${NOVELTIES_PATH}/${id}`, 
             {
                 date: date,
             employeeId: parseInt(employee),
@@ -40,7 +37,7 @@ export default function CompEditNovelty() {
     },[]);
 
     const getNewById = async () => {
-        const response = await axios.get(`${URI}/${id}`);
+        const response = await api.get(`${NOVELTIES_PATH}/${id}`);
         const data = await response.data;
         setDate(fromTimestampToDate(data.date));
         setEmployee(data.employeeId);
@@ -50,8 +47,6 @@ export default function CompEditNovelty() {
         setValue(data.value);
 
         const selectedConcept = concepts.find(concept => concept.id === parseInt(data.conceptId));
-
-        // Check if concept was found before accessing properties
 
             if (data.concept.calculationType === 'FACTORIAL' || data.concept.calculationType === 'LINEAL') {
                 document.getElementById('factor-quantity').classList.remove('d-none');
@@ -74,13 +69,13 @@ export default function CompEditNovelty() {
     }
 
     const getEmployees = async () => {
-        const response = await axios.get(`${BASE_URL}${EMPLOYEES_PATH}`);
+        const response = await api.get(`${EMPLOYEES_PATH}`);
         const data = await response.data;
         setEmployees(data);
     }
 
     const getConcepts = async () => {
-        const response = await axios.get(`${BASE_URL}${CONCEPTS_PATH}`);
+        const response = await api.get(`${CONCEPTS_PATH}`);
         const data = await response.data;
         setConcepts(data);
     }
@@ -118,7 +113,7 @@ export default function CompEditNovelty() {
         setQuantity(selectedQuantity);
 
         if (selectedQuantity !== '') {
-            await axios.post(`${URI}/preload`, {
+            await api.post(`${NOVELTIES_PATH}/preload`, {
                 employeeId: parseInt(employee),
                 conceptId: parseInt(concept),
                 quantity: parseFloat(selectedQuantity)
@@ -130,14 +125,11 @@ export default function CompEditNovelty() {
         }
     }
 
-
-
-
     return (
         <div className="container-fluid w-50 text-bg-light mt-8">
             <div className="row">
                 <div className="col-12">
-                    <h3 className="mt-3 p-4 mb-3 text-center fs-2">Crear novedad</h3>
+                    <h3 className="mt-3 p-4 mb-3 text-center fs-2">Editar novedad</h3>
                     <form onSubmit={handleUpdate}>
                         <div className="d-flex flex-row gap-4">
                             <div className="mb-3 px-4 w-50">
@@ -220,7 +212,7 @@ export default function CompEditNovelty() {
                         </div>
 
                         <div className="d-flex justify-content-center mb-3">
-                            <button className="btn btn-primary fs-4" type="submit">Guardar</button>
+                            <button className="btn btn-success fs-4" type="submit">Guardar</button>
                         </div>
                     </form>
                 </div>

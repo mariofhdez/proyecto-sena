@@ -1,8 +1,5 @@
-import axios from "axios";
-import { BASE_URL, CONCEPTS_PATH } from "../../utils/apiConfig";
+import api, { CONCEPTS_PATH } from "../../utils/apiConfig";
 import { useEffect, useState } from "react";
-
-const URI = `${BASE_URL}${CONCEPTS_PATH}`;
 
 export default function CompShowConcepts() {
     const [ concepts, setConcepts ] = useState([]);
@@ -12,7 +9,7 @@ export default function CompShowConcepts() {
     }, []);
 
     const getConcepts = async () => {
-        const response = await axios.get(URI);
+        const response = await api.get(CONCEPTS_PATH);
         const data = await response.data;
         setConcepts(data);
     }

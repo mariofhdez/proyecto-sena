@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import api, { AUTH_PATH } from "../../utils/apiConfig";
 
 export default function Login() {

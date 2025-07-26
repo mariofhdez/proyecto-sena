@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { fromTimestampToDate } from "../../utils/formatDate";
-import axios from "axios";
-import { BASE_URL, EMPLOYEES_PATH, PERIODS_PATH } from "../../utils/apiConfig";
-
-const URI = `${BASE_URL}${PERIODS_PATH}`
+import api, { EMPLOYEES_PATH, PERIODS_PATH } from "../../utils/apiConfig";
 
 export default function CompOpenPeriod() {
 
@@ -30,7 +27,7 @@ export default function CompOpenPeriod() {
     }, []);
 
     const getPeriodById = async () => {
-        const response = await axios.get(`${URI}/${id}`);
+        const response = await api.get(`${PERIODS_PATH}/${id}`);
         const data = await response.data;
         setStartDate(fromTimestampToDate(data.startDate));
         setEndDate(fromTimestampToDate(data.endDate));
@@ -51,7 +48,7 @@ export default function CompOpenPeriod() {
     }
 
     const getEmployees = async () => {
-        const response = await axios.get(`${BASE_URL}${EMPLOYEES_PATH}`);
+        const response = await api.get(`${EMPLOYEES_PATH}`);
         const data = await response.data;
         setEmployees(data);
     }
@@ -59,7 +56,7 @@ export default function CompOpenPeriod() {
     const handleCreatePayrolls = async (e) => {
         e.preventDefault();
         console.log(selectedEmployees);
-        const response = await axios.post(`${URI}/${id}/open`, {
+        const response = await api.post(`${PERIODS_PATH}/${id}/open`, {
             employees: selectedEmployees
         });
         navigate(`/settlements/${response.data.id}`);
@@ -85,10 +82,10 @@ export default function CompOpenPeriod() {
         <div className="container-fluid w-50 text-bg-light mt-8" style={{minWidth: '550px'}}>
             <div className="row">
                 <div className="col-12 mb-3">
-                    <h3 className="mt-3 p-4 mb-3 text-center fs-2">Período</h3>
-                    <div className="d-flex flex-row gap-4">
-                        <div className="d-flex flex-column gap-4 w-30">
-                            <div className="mb-3 px-4 w-30">
+                    <h3 className="mt-3 p-4 mb-3 text-center fs-2">Período de Liquidación</h3>
+                    <div className="d-flex flex-column gap-4">
+                        <div className="d-flex flex-row justify-content-between gap-4">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="period" className="form-label fs-4">Período</label>
                                 <input
                                     type="text"
@@ -99,7 +96,7 @@ export default function CompOpenPeriod() {
                                     disabled
                                 />
                             </div>
-                            <div className="mb-3 px-4 w-30">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="status" className="form-label fs-4">Estado</label>
                                 <input
                                     type="text"
@@ -110,7 +107,7 @@ export default function CompOpenPeriod() {
                                     disabled
                                 />
                             </div>
-                            <div className="mb-3 px-4 w-30">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="quantity" className="form-label fs-4">Cantidad de empleados</label>
                                 <input
                                     type="number"
@@ -124,8 +121,8 @@ export default function CompOpenPeriod() {
 
                         </div>
 
-                        <div className="d-flex flex-column gap-4 w-30">
-                            <div className="mb-3 px-4">
+                        <div className="d-flex flex-row justify-content-between gap-4">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="startDate" className="form-label fs-4">Fecha de inicio</label>
                                 <input
                                     type="date"
@@ -136,7 +133,7 @@ export default function CompOpenPeriod() {
                                     disabled
                                 />
                             </div>
-                            <div className="mb-3 px-4">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="date" className="form-label fs-4">Fecha de fin</label>
                                 <input
                                     type="date"
@@ -147,7 +144,7 @@ export default function CompOpenPeriod() {
                                     disabled
                                 />
                             </div>
-                            <div className="mb-3 px-4">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="paymentDate" className="form-label fs-4">Fecha de pago</label>
                                 <input
                                     type="date"
@@ -161,8 +158,8 @@ export default function CompOpenPeriod() {
                         </div>
 
 
-                        <div className="d-flex flex-column gap-4 w-30">
-                            <div className="mb-3 px-4 w-30">
+                        <div className="d-flex flex-row justify-content-between gap-4">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="earnings" className="form-label fs-4">Devengados</label>
                                 <input
                                     type="number"
@@ -173,7 +170,7 @@ export default function CompOpenPeriod() {
                                     disabled
                                 />
                             </div>
-                            <div className="mb-3 px-4 w-30">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="deductions" className="form-label fs-4">Deducciones</label>
                                 <input
                                     type="number"
@@ -184,7 +181,7 @@ export default function CompOpenPeriod() {
                                     disabled
                                 />
                             </div>
-                            <div className="mb-3 px-4 w-30">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="total" className="form-label fs-4">Total</label>
                                 <input
                                     type="number"
@@ -201,28 +198,27 @@ export default function CompOpenPeriod() {
 
                     </div>
                 </div>
-
             </div>
 
             <div className="row">
                 <div className="col-12">
-                    <h3 className="mt-3 p-4 mb-3 text-center">Listado de empleados</h3>
-                    <NavLink to={`/settlements/${id}`} onClick={handleCreatePayrolls} className={ settlementStatus === 'DRAFT' ? "btn btn-primary mb-3 float-end" : "btn btn-primary mb-3 float-end disabled"}><i className="fa-solid fa-plus"></i> Crear nómina</NavLink>
+                    <h3 className="mt-3 p-4 mb-3 text-center">Agregar Empleados a la Liquidación</h3>
+                    <NavLink to={`/settlements/${id}`} onClick={handleCreatePayrolls} className={ settlementStatus === 'DRAFT' ? "btn btn-success fs-5 mb-3 float-end" : "btn btn-success fs-5 mb-3 float-end disabled"}><i className="fa-solid fa-plus"></i> Crear nómina</NavLink>
                     <table className="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th className="text-center"><input type="checkbox" className="form-check-input" onChange={handleSelectAll}/></th>
-                                <th className="text-center">Nombre</th>
-                                <th className="text-center">Identificación</th>
-                                <th className="text-center">Cargo</th>
-                                <th className="text-center">Salario</th>
+                                <th className="text-center fs-4">Nombre</th>
+                                <th className="text-center fs-4">Identificación</th>
+                                <th className="text-center fs-4">Cargo</th>
+                                <th className="text-center fs-4">Salario</th>
                             </tr>
                         </thead>
                         <tbody>
                             {employees.map((employee) => (
                                 <tr 
                                 key={employee.id}
-                                className="text-center">
+                                className="text-center fs-5">
                                     <td>
                                         <input type="checkbox" id={employee.id} className="form-check-input" onChange={handleSelectedEmployee} />
                                     </td>

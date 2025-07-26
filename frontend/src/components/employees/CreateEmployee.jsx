@@ -1,9 +1,6 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { EMPLOYEES_PATH, BASE_URL } from "../../utils/apiConfig";
-
-const URI = `${BASE_URL}${EMPLOYEES_PATH}`;
+import api, { EMPLOYEES_PATH } from "../../utils/apiConfig";
 
 export default function CompCreateEmployee() {
     const [identification, setIdentification] = useState('');
@@ -19,8 +16,8 @@ export default function CompCreateEmployee() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(salary);
-        await axios.post(
-            URI,
+        await api.post(
+            EMPLOYEES_PATH,
             {
                 identification: identification,
                 firstSurname: firstSurname,
@@ -32,11 +29,11 @@ export default function CompCreateEmployee() {
                 position: position,
             }
         );
-        navigate(`${EMPLOYEES_PATH}`);
+        navigate(`/employees`);
     }
 
     return (
-        <div className="container-fluid w-75 text-bg-light mt-8">
+        <div className="container-fluid w-50 text-bg-light mt-8">
             <div className="row">
                 <div className="col-12">
                     <h3 className="mt-3 p-4 mb-3 text-center fs-2">Crear empleado</h3>
@@ -134,7 +131,7 @@ export default function CompCreateEmployee() {
                         </div>
 
                         <div className="d-flex justify-content-center mb-3">
-                            <button className="btn btn-primary fs-4" type="submit">Guardar</button>
+                            <button className="btn btn-success fs-4" type="submit">Guardar</button>
                         </div>
                     </form>
                 </div>

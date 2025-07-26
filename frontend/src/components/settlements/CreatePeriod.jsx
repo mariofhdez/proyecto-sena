@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { BASE_URL, PERIODS_PATH } from "../../utils/apiConfig";
-
-const URI = `${BASE_URL}${PERIODS_PATH}`
+import api, { PERIODS_PATH } from "../../utils/apiConfig";
 
 export default function CompCreatePeriod() {
 
@@ -34,7 +31,7 @@ export default function CompCreatePeriod() {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await axios.post(URI,{
+        const response = await api.post(PERIODS_PATH,{
             period: `${year} - ${month.label}`,
             startDate: startDate,
             endDate: endDate,
@@ -59,7 +56,7 @@ export default function CompCreatePeriod() {
     return (
         <div className="container-fluid w-50 text-bg-light mt-8">
             <div className="row">
-                <div className="col-12">
+                <div className="col-12 mb-3">
                     <h3 className="mt-3 p-4 mb-3 text-center fs-2">Crear período</h3>
                     <form onSubmit={handleSubmit}>
                         <div className="d-flex flex-row gap-4">
@@ -67,7 +64,7 @@ export default function CompCreatePeriod() {
                                 <label htmlFor="year" className="form-label fs-4">Año</label>
                                 <select
                                     type="text"
-                                    className="form-control fs-4"
+                                    className="form-select fs-4"
                                     id="year"
                                     value={year}
                                     onChange={e => setYear(e.target.value)}>
@@ -81,7 +78,7 @@ export default function CompCreatePeriod() {
                                 <label htmlFor="month" className="form-label fs-4">Mes</label>
                                 <select
                                     type="text"
-                                    className="form-control fs-4"
+                                    className="form-select fs-4"
                                     id="month"
                                     value={month}
                                     onChange={handleChangeMonth}>
@@ -121,7 +118,7 @@ export default function CompCreatePeriod() {
 
 
                         <div className="d-flex justify-content-center mb-3">
-                            <button className="btn btn-primary fs-4" type="submit">Guardar</button>
+                            <button className="btn btn-success fs-4" type="submit">Guardar</button>
                         </div>
                     </form>
                 </div>

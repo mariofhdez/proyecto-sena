@@ -1,9 +1,7 @@
-import axios from "axios";
+
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { BASE_URL, USERS_PATH } from "../../utils/apiConfig";
-
-const URI = `${BASE_URL}${USERS_PATH}`;
+import api, { USERS_PATH } from "../../utils/apiConfig";
 
 
 export default function CompShowUsers() {
@@ -14,7 +12,7 @@ export default function CompShowUsers() {
     }, []);
 
     const getUsers = async () => {
-        const response = await axios.get(URI, {
+        const response = await api.get(USERS_PATH, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "application/json"
@@ -27,7 +25,7 @@ export default function CompShowUsers() {
     const toggleUser = async (id, status) => {
         try {
             const body = { isActive: !status }
-            const response = await axios.patch(`${URI}/status/${id}`, body, {
+            const response = await API.patch(`${USERS_PATH}/status/${id}`, body, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "application/json"
@@ -46,7 +44,7 @@ export default function CompShowUsers() {
     }
 
     const deleteUser = async (id) => {
-        await axios.delete(`${URI}/${id}`, {
+        await api.delete(`${USERS_PATH}/${id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "application/json"

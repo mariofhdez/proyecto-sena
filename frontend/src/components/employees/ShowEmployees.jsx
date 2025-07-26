@@ -1,9 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { BASE_URL, EMPLOYEES_PATH } from "../../utils/apiConfig";
-
-const URI = `${BASE_URL}${EMPLOYEES_PATH}`;
+import api, { EMPLOYEES_PATH } from "../../utils/apiConfig";
 
 export default function CompShowEmployees() {
     const [employees, setEmployees] = useState([]);
@@ -13,14 +10,14 @@ export default function CompShowEmployees() {
     }, []);
 
     const getEmployees = async () => {
-        const response = await axios.get(URI);
+        const response = await api.get(EMPLOYEES_PATH);
         const data = await response.data;
         setEmployees(data);
     }
 
     const toggleEmployee = async (id) => {
         try {
-            const response = await axios.post(`${URI}/status/${id}`);
+            const response = await api.post(`${EMPLOYEES_PATH}/status/${id}`);
 
             setEmployees((prevEmployees) => 
                 prevEmployees.map((e) => e.id === id ? {...response.data }: e)
@@ -31,7 +28,7 @@ export default function CompShowEmployees() {
     }
 
     const deleteEmployee = async (id) => {
-        await axios.delete(`${URI}/${id}`);
+        await api.delete(`${EMPLOYEES_PATH}/${id}`);
         getEmployees();
     }
 
@@ -39,24 +36,24 @@ export default function CompShowEmployees() {
         <div className="container-fluid w-75 text-bg-light mt-6">
             <div className="row">
                 <div className="col-12">
-                    <h3 className="mt-3 p-4 mb-3 text-center">Listado de empleados</h3>
-                    <NavLink to="/employees/create" className="btn btn-primary mb-3 float-end"><i className="fa-solid fa-plus"></i> Nuevo empleado</NavLink>
+                    <h3 className="mt-3 p-4 mb-3 text-center fs-2">Listado de empleados</h3>
+                    <NavLink to="/employees/create" className="btn btn-success mb-3 float-end fs-5"><i className="fa-solid fa-plus"></i> Nuevo empleado</NavLink>
                     <table className="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th className="text-center">Identificación</th>
-                                <th className="text-center">Nombre</th>
-                                <th className="text-center">Cargo</th>
-                                <th className="text-center">Estado</th>
-                                <th className="text-center">Salario</th>
-                                <th className="text-center">Acciones</th>
+                                <th className="text-center fs-4">Identificación</th>
+                                <th className="text-center fs-4">Nombre</th>
+                                <th className="text-center fs-4">Cargo</th>
+                                <th className="text-center fs-4">Estado</th>
+                                <th className="text-center fs-4">Salario</th>
+                                <th className="text-center fs-4">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             {employees.map((employee) => (
                                 <tr 
                                     key={employee.id}
-                                    className="text-center"
+                                    className="text-center fs-5"
                                 >
                                     <td>{employee.identification}</td>
                                     <td>{employee.firstName} {employee.firstSurname}</td>
@@ -64,9 +61,9 @@ export default function CompShowEmployees() {
                                     <td>{employee.isActive ? 'Activo' : 'Inactivo'}</td>
                                     <td>{employee.salary}</td>
                                     <td className="d-flex gap-2 justify-content-center">
-                                        <NavLink to={`${EMPLOYEES_PATH}/${employee.id}`} className="btn btn-secondary"><i className="fa-solid fa-eye"></i></NavLink>
-                                        <NavLink to={`${EMPLOYEES_PATH}/edit/${employee.id}`} className="btn btn-primary"><i className="fa-solid fa-pen-to-square"></i></NavLink>
-                                        <button className="btn btn-success" onClick={() => toggleEmployee(employee.id)}><i className="fa-solid fa-toggle-on"></i></button>
+                                        <NavLink to={`${EMPLOYEES_PATH}/${employee.id}`} className="btn btn-info"><i className="fa-solid fa-eye"></i></NavLink>
+                                        <NavLink to={`${EMPLOYEES_PATH}/edit/${employee.id}`} className="btn btn-success"><i className="fa-solid fa-pen-to-square"></i></NavLink>
+                                        <button className="btn btn-warning" onClick={() => toggleEmployee(employee.id)}><i className={`fa-solid fa-toggle-${employee.isActive ? 'on' : 'off'}`}></i></button>
                                         <button className="btn btn-danger" onClick={() => deleteEmployee(employee.id)}><i className="fa-solid fa-trash-can"></i></button>
                                     </td>
                                 </tr>

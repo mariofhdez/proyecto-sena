@@ -1,9 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL, NOVELTIES_PATH, EMPLOYEES_PATH, CONCEPTS_PATH } from "../../utils/apiConfig";
-
-const URI = `${BASE_URL}${NOVELTIES_PATH}`;
+import api,{ NOVELTIES_PATH, EMPLOYEES_PATH, CONCEPTS_PATH } from "../../utils/apiConfig";
 
 export default function CompCreateNovelty() {
     const [date, setDate] = useState('');
@@ -24,13 +21,13 @@ export default function CompCreateNovelty() {
     }, []);
 
     const getEmployees = async () => {
-        const response = await axios.get(`${BASE_URL}${EMPLOYEES_PATH}/active`);
+        const response = await api.get(`${EMPLOYEES_PATH}/active`);
         const data = await response.data;
         setEmployees(data);
     }
 
     const getConcepts = async () => {
-        const response = await axios.get(`${BASE_URL}${CONCEPTS_PATH}`);
+        const response = await api.get(`${CONCEPTS_PATH}`);
         const data = await response.data;
         const availableConcepts = data.filter(c => c.isRegularConcept === false);
         setConcepts(availableConcepts);
@@ -69,7 +66,7 @@ export default function CompCreateNovelty() {
         setQuantity(selectedQuantity);
 
         if (selectedQuantity !== '') {
-            await axios.post(`${URI}/preload`, {
+            await api.post(`${NOVELTIES_PATH}/preload`, {
                 employeeId: parseInt(employee),
                 conceptId: parseInt(concept),
                 quantity: parseFloat(selectedQuantity)
@@ -83,7 +80,7 @@ export default function CompCreateNovelty() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await axios.post(URI, {
+        await api.post(NOVELTIES_PATH, {
             date: date,
             employeeId: parseInt(employee),
             conceptId: parseInt(concept),
@@ -97,7 +94,7 @@ export default function CompCreateNovelty() {
         <div className="container-fluid w-50 text-bg-light mt-8">
             <div className="row">
                 <div className="col-12">
-                    <h3 className="mt-3 p-4 mb-3 text-center fs-2">Crear novedad</h3>
+                    <h3 className="mt-3 p-4 mb-3 text-center fs-2">Crear Novedad</h3>
                     <form onSubmit={handleSubmit}>
                         <div className="d-flex flex-row gap-4">
                             <div className="mb-3 px-4 w-50">
@@ -115,7 +112,7 @@ export default function CompCreateNovelty() {
                                 <label htmlFor="employee" className="form-label fs-4">Empleado</label>
                                 <select
                                     type="text"
-                                    className="form-control fs-4"
+                                    className="form-select fs-4"
                                     id="employee"
                                     value={employee}
                                     onChange={handleChangeEmployee}
@@ -132,7 +129,7 @@ export default function CompCreateNovelty() {
                                 <label htmlFor="concept" className="form-label fs-4">Concepto</label>
                                 <select
                                     type="text"
-                                    className="form-control fs-4"
+                                    className="form-select fs-4"
                                     id="concept"
                                     value={concept}
                                     onChange={handleChangeConcept}>
@@ -180,7 +177,7 @@ export default function CompCreateNovelty() {
                         </div>
 
                         <div className="d-flex justify-content-center mb-3">
-                            <button className="btn btn-primary fs-4" type="submit">Guardar</button>
+                            <button className="btn btn-success fs-4" type="submit">Guardar</button>
                         </div>
                     </form>
                 </div>

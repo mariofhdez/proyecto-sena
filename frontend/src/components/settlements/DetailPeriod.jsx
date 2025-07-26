@@ -75,10 +75,10 @@ export default function CompDetailPeriod() {
         <div className="container-fluid w-50 text-bg-light mt-8">
             <div className="row">
                 <div className="col-12 mb-3">
-                    <h3 className="mt-3 p-4 mb-3 text-center fs-2">Período</h3>
-                    <div className="d-flex flex-row gap-4">
-                        <div className="d-flex flex-column gap-4 w-30">
-                            <div className="mb-3 px-4 w-30">
+                    <h3 className="mt-3 p-4 mb-3 text-center fs-2">Período de Liquidación</h3>
+                    <div className="d-flex flex-column gap-4">
+                        <div className="d-flex flex-row justify-content-between gap-4">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="period" className="form-label fs-4">Período</label>
                                 <input
                                     type="text"
@@ -89,7 +89,7 @@ export default function CompDetailPeriod() {
                                     disabled
                                 />
                             </div>
-                            <div className="mb-3 px-4 w-30">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="status" className="form-label fs-4">Estado</label>
                                 <input
                                     type="text"
@@ -100,7 +100,7 @@ export default function CompDetailPeriod() {
                                     disabled
                                 />
                             </div>
-                            <div className="mb-3 px-4 w-30">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="quantity" className="form-label fs-4">Cantidad de empleados</label>
                                 <input
                                     type="number"
@@ -114,8 +114,8 @@ export default function CompDetailPeriod() {
 
                         </div>
 
-                        <div className="d-flex flex-column gap-4 w-30">
-                            <div className="mb-3 px-4">
+                        <div className="d-flex flex-row justify-content-between gap-4">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="startDate" className="form-label fs-4">Fecha de inicio</label>
                                 <input
                                     type="date"
@@ -126,7 +126,7 @@ export default function CompDetailPeriod() {
                                     disabled
                                 />
                             </div>
-                            <div className="mb-3 px-4">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="date" className="form-label fs-4">Fecha de fin</label>
                                 <input
                                     type="date"
@@ -137,7 +137,7 @@ export default function CompDetailPeriod() {
                                     disabled
                                 />
                             </div>
-                            <div className="mb-3 px-4">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="paymentDate" className="form-label fs-4">Fecha de pago</label>
                                 <input
                                     type="date"
@@ -151,8 +151,8 @@ export default function CompDetailPeriod() {
                         </div>
 
 
-                        <div className="d-flex flex-column gap-4 w-30">
-                            <div className="mb-3 px-4 w-30">
+                        <div className="d-flex flex-row justify-content-between gap-4">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="earnings" className="form-label fs-4">Devengados</label>
                                 <input
                                     type="number"
@@ -163,7 +163,7 @@ export default function CompDetailPeriod() {
                                     disabled
                                 />
                             </div>
-                            <div className="mb-3 px-4 w-30">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="deductions" className="form-label fs-4">Deducciones</label>
                                 <input
                                     type="number"
@@ -174,7 +174,7 @@ export default function CompDetailPeriod() {
                                     disabled
                                 />
                             </div>
-                            <div className="mb-3 px-4 w-30">
+                            <div className="mb-3 flex-fill" style={{minWidth: '200px', maxWidth: '300px'}}>
                                 <label htmlFor="total" className="form-label fs-4">Total</label>
                                 <input
                                     type="number"
@@ -191,15 +191,14 @@ export default function CompDetailPeriod() {
 
                     </div>
                 </div>
-
             </div>
 
             <div className="row">
                 <div className="col-12">
-                    <h3 className="mt-3 p-4 mb-3 text-center">Listado de nóminas</h3>
+                    <h3 className="mt-3 p-4 mb-3 text-center">Listado de liquidaciones de nómina</h3>
                     <div className="d-flex justify-content-end gap-3">
-                    <NavLink to={`/settlements/${id}`} className="btn btn-primary mb-3 float-end" onClick={handleSettlePayrolls}><i className="fa-solid fa-plus"></i> Liquidar nóminas</NavLink>
-                    <NavLink to={`/settlements/${id}`} className="btn btn-primary mb-3 float-end" onClick={handleClosePayrolls}><i className="fa-solid fa-plus"></i> Cerrar nóminas</NavLink>
+                    <NavLink to={`/settlements/open/${id}`} className={settlementStatus === 'DRAFT' ? "btn btn-info mb-3 float-end fs-5" : "d-none" } ><i className="fa-solid fa-plus"></i> Agregar empleados</NavLink>
+                    <NavLink to={`/settlements/${id}`} className={settlementStatus === 'OPEN' ? "btn btn-success mb-3 float-end fs-5" : "btn btn-success mb-3 float-end fs-5 disabled"} onClick={handleSettlePayrolls}><i className="fa-solid fa-plus"></i> Liquidar nóminas</NavLink>
                     </div>
                     <table className="table table-striped table-hover">
                         <thead>
@@ -225,8 +224,8 @@ export default function CompDetailPeriod() {
                                     <td>{payroll.totalValue}</td>
                                     <td className="d-flex justify-content-center gap-2">
                                         <NavLink to={`/payrolls/${payroll.id}`} className="btn btn-secondary"><i className="fa-solid fa-eye"></i></NavLink>
-                                        <NavLink to={`/settlements/edit/${payroll.id}`} className="btn btn-primary"><i className="fa-solid fa-pencil"></i></NavLink>
-                                        <button className="btn btn-danger"><i className="fa-solid fa-trash"></i></button>
+                                        {/* <NavLink to={`/settlements/edit/${payroll.id}`} className="btn btn-primary"><i className="fa-solid fa-pencil"></i></NavLink> */}
+                                        {/* <button className="btn btn-danger"><i className="fa-solid fa-trash"></i></button> */}
                                     </td>
                                 </tr>
                             ))

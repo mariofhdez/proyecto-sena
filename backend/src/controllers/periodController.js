@@ -193,7 +193,7 @@ exports.deletePeriod = async (req, res, next) => {
     try {
         const id = parseInt(req.params.id);
 
-        await removePeriod(id);
+        await deletePeriod(id);
         res.json({message: 'The period was deleted successfully'});
     } catch (error) {
         next(error);

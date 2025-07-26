@@ -1,9 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { EMPLOYEES_PATH, BASE_URL } from "../../utils/apiConfig";
-
-const URI = `${BASE_URL}${EMPLOYEES_PATH}`;
+import { useNavigate, useParams, useLocation, NavLink } from "react-router-dom";
+import api, { EMPLOYEES_PATH } from "../../utils/apiConfig";
 
 export default function CompEditEmployee() {
     const [identification, setIdentification] = useState('');
@@ -24,7 +21,7 @@ export default function CompEditEmployee() {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        await axios.patch(`${URI}/${id}`, 
+        await api.patch(`${EMPLOYEES_PATH}/${id}`, 
             {
                 // identification: identification,
                 firstSurname: firstSurname,
@@ -36,15 +33,15 @@ export default function CompEditEmployee() {
                 position: position,
             }
         );
-        navigate(`${EMPLOYEES_PATH}`);
+        navigate(`/employees/${id}`);
     }
 
     useEffect(() => {
-        getEmployeeById();
+        getEmployeeById(id);
     },[]);
 
-    const getEmployeeById = async () => {
-        const response = await axios.get(`${URI}/${id}`);
+    const getEmployeeById = async (id) => {
+        const response = await api.get(`${EMPLOYEES_PATH}/${id}`);
         const data = await response.data;
         setIdentification(data.identification);
         setFirstName(data.firstName);
@@ -57,10 +54,10 @@ export default function CompEditEmployee() {
     }
 
     return (
-        <div className="container-fluid w-75 text-bg-light mt-8">
+        <div className="container-fluid w-50 text-bg-light mt-8">
             <div className="row">
                 <div className="col-12">
-                    <h3 className="mt-3 p-4 mb-3 text-center fs-2">Editar empleado</h3>
+                    <h3 className="mt-3 p-4 mb-3 text-center fs-2">{editMode ? "Editar " : ""}Empleado</h3>
                     <form onSubmit={handleUpdate}>
                         <div className="mb-3 px-4">
                             <label htmlFor="identification" className="form-label fs-4">Identificación</label>
@@ -168,8 +165,11 @@ export default function CompEditEmployee() {
                             <label htmlFor="transportAllowance" className="form-label fs-4">Auxilio de Transporte</label>
                         </div>
 
-                        <div className="d-flex justify-content-center mb-3">
-                            <button className="btn btn-primary fs-4" type="submit">Guardar</button>
+                        <div className={editMode ? "d-flex justify-content-center mb-3":"d-none"}>
+                            <button className="btn btn-success fs-4" type="submit">Guardar</button>
+                        </div>
+                        <div className={!editMode ? "d-flex justify-content-center mb-3": "d-none"}>
+                            <NavLink className="btn btn-primary fs-4" to={`/employees/edit/${id}`}>Editar</NavLink>
                         </div>
                     </form>
                 </div>

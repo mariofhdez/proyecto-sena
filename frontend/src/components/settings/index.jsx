@@ -2,11 +2,11 @@
 import { useNavigate } from "react-router-dom";
 
 const sections = [
-  {
-    title: "Empresa",
-    description: "Configuración de la empresa",
-    route: "/config/company",
-  },
+  // {
+  //   title: "Empresa",
+  //   description: "Configuración de la empresa",
+  //   route: "/config/company",
+  // },
   {
     title: "Conceptos",
     description: "Gestiona los conceptos de nómina",
@@ -24,7 +24,7 @@ export default function CompSettingsMenu() {
 
   return (
     <div style={{ padding: 32 }}>
-      <h1>Settings</h1>
+      <h1>Configuración</h1>
       <div style={{ display: "flex", gap: 24, marginTop: 24 }}>
         {sections.map((section) => (
           <div
