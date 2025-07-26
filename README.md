@@ -11,8 +11,8 @@
 
 1. Clona el repositorio:
    ```
-   git clone https://github.com/mariofhdez/proyecto-sena-web-back.git
-   cd proyecto-sena-web-back
+   git clone https://github.com/mariofhdez/proyecto-sena.git
+   cd proyecto-sena
    ```
 
 2. Instala las dependencias globales:
@@ -65,7 +65,7 @@
    Luego,se deben agregar las variables necesarias para configurar el servidor:
    ```
    // Configuración del servidor backend
-   VITE_BACKEND_BASE_URL=http://localhost:3005/api 
+   VITE_BACKEND_BASE_URL=http://localhost:3000/api 
    ```
 6. Ejecuta los scripts de configuración:
    Desde la línea de comandos ejecuta la siguiente instrucción para crear la base de datos.
