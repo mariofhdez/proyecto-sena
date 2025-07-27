@@ -37,15 +37,14 @@ async function validateNoveltyBody(noveltyId, novelty) {
     if (isRegularConcept) errors.push('Concept with id \'' + novelty.conceptId + '\' is not available for novelties');
     data.concept.connect.id = novelty.conceptId;
 
-    if (getCalculationType(novelty.conceptId) === 'NOMINAL') {
-        validateRequiredNumber(novelty.value, 'value', errors);
-        data.value = novelty.value;
-    }
     if (getCalculationType(novelty.conceptId) === 'LINEAL' || getCalculationType(novelty.conceptId) === 'FACTORIAL') {
         validateRequiredNumber(novelty.quantity, 'quantity', errors);
         data.quantity = novelty.quantity;
-
+        
         data.value = await calculateConceptValue(novelty.conceptId, novelty.employeeId, novelty.quantity, novelty.date);
+    } else {
+        validateRequiredNumber(novelty.value, 'value', errors);
+        data.value = novelty.value;    
     }
 
     if(!noveltyId){

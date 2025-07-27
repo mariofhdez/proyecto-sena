@@ -270,10 +270,8 @@ async function generateSettlement(employeeId, periodId, startDate, endDate) {
                 calculatedValues // 🆕 Pasar el caché
             );
         } else {
-            console.log('else: ', concept);
             const novelty = novelties.find(n => n.conceptId === concept.id);
             if (novelty) {
-                console.log('novelty: ', novelty);
                 value = novelty.value;
             }
         }

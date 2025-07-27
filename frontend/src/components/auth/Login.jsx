@@ -38,7 +38,7 @@ export default function Login() {
             <h3 className="mb-4 text-center fs-2">Iniciar sesión</h3>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="email" className="form-label fs-5">
+                <label htmlFor="email" className="form-label fs-4">
                   Email
                 </label>
                 <input
@@ -52,7 +52,7 @@ export default function Login() {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="password" className="form-label fs-5">
+                <label htmlFor="password" className="form-label fs-4">
                   Contraseña
                 </label>
                 <input
@@ -68,7 +68,7 @@ export default function Login() {
                 <div className="alert alert-danger">{error}</div>
               )}
               <div className="d-grid mt-3">
-                <button type="submit" className="btn btn-primary fs-5 py-2">
+                <button type="submit" className="btn btn-primary fs-4 py-2">
                   Ingresar
                 </button>
               </div>

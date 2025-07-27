@@ -27,11 +27,8 @@ async function loadPayrollConcepts() {
         let conceptsFromDB = await prisma.concept.findMany({ orderBy: { code: 'asc' } });
         if (!conceptsFromDB || conceptsFromDB.length === 0) {
             // Cargar desde staticData.json
-            console.log('dirname:',__dirname)
             const staticPath = path.join(__dirname, '../../prisma/staticData.json');
-            console.log('staticPath:', staticPath);
             const staticData = JSON.parse(fs.readFileSync(staticPath, 'utf8'));
-            console.log('staticData:', staticData);
             if (!staticData.payrollConcept || staticData.payrollConcept.length === 0) {
                 throw new Error('No se encontraron conceptos en staticData.json');
             }
@@ -46,9 +43,9 @@ async function loadPayrollConcepts() {
         incomeConcepts = payrollConcepts.filter(concept => concept.isIncome === true);
         vacationConcepts = payrollConcepts.filter(concept => concept.isVacation === true);
         ibcConcepts = payrollConcepts.filter(concept => concept.isIBC === true);
-        console.log(`   - Conceptos de ingreso: ${incomeConcepts.length}`);
-        console.log(`   - Conceptos de vacaciones: ${vacationConcepts.length}`);
-        console.log(`   - Conceptos IBC: ${ibcConcepts.length}`);
+        // console.log(`   - Conceptos de ingreso: ${incomeConcepts.length}`);
+        // console.log(`   - Conceptos de vacaciones: ${vacationConcepts.length}`);
+        // console.log(`   - Conceptos IBC: ${ibcConcepts.length}`);
     } catch (error) {
         console.error('❌ Error al cargar los conceptos de nómina:', error.message);
         throw new Error('Error al cargar los conceptos de nómina');
@@ -150,7 +147,6 @@ function getConceptByCode(conceptCode) {
  */
 function getRegularConcepts(conceptCode) {
     const concept = regularConcepts.find(concept => concept === conceptCode);
-    console.log(concept === conceptCode);
     return concept === conceptCode;
 }
 
