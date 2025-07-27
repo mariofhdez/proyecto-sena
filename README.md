@@ -94,14 +94,14 @@
 
 ⚠️ **Requerido** Docker y Docker Compose
 
-📺 [Guía de despliegue con Docker y Docker-compose](nnn)
+📺 [Guía de despliegue con Docker y Docker-compose](https://www.loom.com/share/bd055aa821f740ba8ac7517de0e1f37f?sid=c293b245-0d19-4c57-a920-cd95bd764e88)
 1. Clona el repositorio:
    ```
    git clone https://github.com/mariofhdez/proyecto-sena.git
    cd proyecto-sena
    ```
 
-2. Crea las variables de entorno como en la sección aterior.
+2. Crea las variables de entorno como en la sección aterior. (Puntos 4 y 5)
 3. Levanta los servicios
    ```
    docker-compose up
