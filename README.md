@@ -120,7 +120,7 @@ El proyecto utiliza **Jest** como framework de testing con las siguientes config
 
 ### 🔧 Configuración de Base de Datos para Tests
 
-📺 [Guía de configuración de la Base de Datos de Pruebas] ()
+📺 [Guía de configuración de la Base de Datos de Pruebas](https://www.loom.com/share/9332848d87ec4c8eaef4dfae87543b3b?sid=ae1636c9-5d21-49b0-b398-a1233df223a4)
 
 Antes de ejecutar las pruebas por primera vez se debe ejecutar el comando de configuración de base de datos.
 Los tests utilizan una base de datos separada (`payma_test`) que se configura automáticamente:
@@ -182,5 +182,10 @@ Al ejecutar `npm run test:coverage` se genera:
 - Métricas de cobertura por archivo y función
 - Análisis de líneas cubiertas vs no cubiertas
 
+### 🧑‍🚀 Testing desde Postman
 
-🧪 [Configuración de Postman 🚀 para pruebas de la API](https://www.loom.com/share/bb755f19685f4aeb99ae2a9b9bf5a81b?sid=59dd5733-1db7-4057-b83a-b9f9a27e121d)
+La arquitectura REST del backend del sistema permite realizar pruebas de integración completas desde Postman, ya que expone endpoints HTTP bien definidos que pueden ser consumidos de forma independiente. Al estar basada en estándares web como HTTP y JSON, cualquier cliente que soporte estas tecnologías puede interactuar con la API de forma transparente.
+
+🔗 [Link a la collection de Postman](https://github.com/mariofhdez/proyecto-sena/blob/main/backend/N%C3%B3mina.postman_collection.json)
+
+📺 [Guía de configuración de Postman para pruebas de la API](https://www.loom.com/share/bb755f19685f4aeb99ae2a9b9bf5a81b?sid=59dd5733-1db7-4057-b83a-b9f9a27e121d)
